@@ -9,9 +9,9 @@ const router = express.Router();
 router.post('/register', async (req, res) => {
   try {
     // Extract user data from the request body
-    const { username, password, displayName } = req.body || {};
+    const { email, password, firstName, lastName } = req.body || {};
 
-    if (!username || !password || !displayName) {
+    if (!email || !password || !firstName || !lastName) {
       return res.status(400).json({ error: 'Invalid request payload' });
     };
 
@@ -19,17 +19,49 @@ router.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
-      username,
+      email,
       password: hashedPassword,
-      displayName,
+      firstName,
+      lastName
     });
 
     await newUser.save();
 
+    //res.setHeader('Content-Type', 'application/json');
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     console.error('Error saving user:', error);
     res.status(500).json({ error: 'Internal server error', details: error.message });
+  }
+});
+
+router.post('/login', async (req, res) => {
+  try {
+    // Extract user data from the request body
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Invalid request payload' });
+    }
+
+    // Find the user in MongoDB
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    // Compare the provided password with the stored hashed password using bcrypt
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    return res.status(200).json({ message: "Login successful" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 

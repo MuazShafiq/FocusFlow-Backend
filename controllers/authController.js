@@ -1,4 +1,4 @@
-const { Request, Response } = require("express");
+/* const { Request, Response } = require("express");
 const mongoose = require("mongoose");
 
 // MongoDB connection setup
@@ -47,3 +47,4 @@ exports.loginUser = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+ */

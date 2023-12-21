@@ -7,17 +7,20 @@ const session = require("express-session");
 const passport = require("./auth/auth");
 const authRoutes = require("./routes/authRoutes");
 const { ensureAuthenticated } = require("./middleware/authMiddleware");
-
+const cors = require('cors')
+const IP = process.env.IP;
 const PORT = process.env.PORT;
 
 connectDB();
+
+app.use(cors());
 
 app.use(bodyParser.json());
 
 // Enable sessions
 app.use(
   session({
-    secret: process.env.GOOGLE_CLIENT_SECRET, // Replace with a secure secret
+    secret: process.env.GOOGLE_CLIENT_SECRET,
     resave: false,
     saveUninitialized: true,
   })
@@ -38,5 +41,5 @@ app.get("/dashboard", ensureAuthenticated, (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on ${IP}:${PORT}`);
 });

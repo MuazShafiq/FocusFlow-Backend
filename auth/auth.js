@@ -7,7 +7,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback", // Adjust the callback URL
+      callbackURL: "http://192.168.9.40:3000/auth/google/callback", // Adjust the callback URL
     },
     (accessToken, refreshToken, profile, done) => {
       // You can save the user profile to your database or perform other actions
