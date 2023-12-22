@@ -6,6 +6,7 @@ const connectDB = require("./config/database");
 const session = require("express-session");
 const passport = require("./auth/auth");
 const authRoutes = require("./routes/authRoutes");
+const dataRoutes = require("./routes/dataRoutes");
 const { ensureAuthenticated } = require("./middleware/authMiddleware");
 const cors = require('cors')
 const IP = process.env.IP;
@@ -32,6 +33,8 @@ app.use(passport.session());
 
 app.use("/auth", authRoutes);
 
+app.use("/data", dataRoutes)
+
 app.get("/", (req, res) => {
   res.send("Hello, FocusFlow Backend!");
 });
@@ -41,5 +44,5 @@ app.get("/dashboard", ensureAuthenticated, (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on ${IP}:${PORT}`);
+  console.log(`Server is running on http://${IP}:${PORT}`);
 });

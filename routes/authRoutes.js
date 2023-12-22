@@ -29,6 +29,7 @@ router.post('/register', async (req, res) => {
 
     //res.setHeader('Content-Type', 'application/json');
     res.status(201).json({ message: 'User registered successfully' });
+    //res.redirect("/dashboard");
   } catch (error) {
     console.error('Error saving user:', error);
     res.status(500).json({ error: 'Internal server error', details: error.message });
@@ -59,6 +60,7 @@ router.post('/login', async (req, res) => {
     }
 
     return res.status(200).json({ message: "Login successful" });
+    //res.redirect("/data/activties");
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal server error" });
