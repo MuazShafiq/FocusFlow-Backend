@@ -14,9 +14,14 @@ const PORT = process.env.PORT;
 
 connectDB();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://10.1.147.172:19000', // Your frontend development environment
+  })
+);
 
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Enable sessions
 app.use(

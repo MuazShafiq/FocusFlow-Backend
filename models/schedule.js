@@ -5,28 +5,28 @@ const mongoose = require("mongoose");
 const User = require("./user"); */
 
 // Defining the schema for Activity collection
-const activitySchema = new mongoose.Schema({
+const scheduleSchema = new mongoose.Schema({
   /* user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   }, */
-  date: {
-    type: Date,
+  day: {
+    type: String,
     required: true, // Making the 'date' field mandatory
   },
-  activity: {
+  time: {
     type: String,
     required: true, // Making the 'activity' field mandatory
   },
-  time: {
+  activity: {
     type: String,
     required: true, // Making the 'time' field mandatory
   },
 });
 
 // Creating the Activity model
-const Activity = mongoose.model("Activity", activitySchema);
+const Schedule = mongoose.model("Schedule", scheduleSchema);
 
 // Exporting the Activity model
-module.exports = Activity;
+module.exports = Schedule;
